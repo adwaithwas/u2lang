@@ -1,0 +1,5 @@
+factor --> int | float
+
+term --> factor { ( * | / ) factor }*n
+
+expression --> term { ( + | - ) term }*n
