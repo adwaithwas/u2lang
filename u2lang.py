@@ -1,4 +1,18 @@
+#ERRORS
+class Errors:
+    def __init__(self, error_name, details):
+        self.error_name = error_name
+        self.details = details
 
+    def print_error(self):
+        result = f'{self.error_name}: {self.details}'
+        return result
+
+class IllegalCharacterError(Errors):
+    def __init__(self, details):
+        super().__init__('Illegal Character', details)
+
+        
 
 #TOKENS
 TT_PLUS = 'PLUS'
@@ -29,6 +43,7 @@ class Lexer:
         self.pos = -1
         self.current_char = None
         self.advance()
+        self.errors_list = []
 
     def advance(self):
         self.pos += 1
@@ -83,13 +98,16 @@ class Lexer:
                 tokens.append(Token(TT_LPAREN))
                 self.advance()
             else:
-                #ERROR
-                print('PLACEHOLDER FOR ERROR') #####################################
+                illegal_char = self.current_char
                 self.advance()
-        return tokens
+
+                return [], IllegalCharacterError(" " + illegal_char + " ")
+
+
+        return tokens, None
 
 def run(text):
     lexer = Lexer(text)
-    tokens = lexer.makeTokens()
+    tokens, errors = lexer.makeTokens()
 
-    return tokens
+    return tokens, errors
