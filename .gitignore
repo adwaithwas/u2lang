@@ -4,5 +4,7 @@
 # ignore ALL files in ANY directory named temp
 temp/
 
+#this is just a comment
+
 # ignore python cache
 __pycache__/
